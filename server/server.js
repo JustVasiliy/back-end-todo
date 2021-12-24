@@ -57,11 +57,12 @@ http
         req.on("data", async (chunk) => {
           bodyDelete += chunk;
           bodyDelete = JSON.parse(bodyDelete);
-          const result = await Item.update(
+          await Item.update(
             { id: bodyDelete.id },
             { deleted: true }
           );
-          await res.end(JSON.stringify(result));
+            
+         
         });
 
         res.end("delete");
@@ -72,8 +73,8 @@ http
         req.on("data", async (chunk) => {
           body += chunk;
           body = JSON.parse(body);
-          const result = await Item.update({ id: body.id }, body);
-          await res.end(JSON.stringify(result));
+          await Item.update({ id: body.id }, body);
+          
         });
 
         res.end("Changed");
