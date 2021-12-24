@@ -23,18 +23,17 @@ const Model = mongoose.model;
 const Item = Model("todo-items", Task);
 
 http
-  .createServer((req, res) => {
+  .createServer(async (req, res) => {
     res.writeHead(200, defaultHeaders);
     switch (req.url) {
       case "/todos":
-        setTimeout(()=>Item.find({ deleted: false }).then((result) => {
-          res.end(JSON.stringify(result))
-        }), 200)
+        const result = await Item.find( { deleted: false });
+        await res.end( JSON.stringify(result));
 
         break;
       case "/create":
         let bodyCreate = "";
-        req.on("data", (chunk) => {
+        req.on("data", async(chunk) => {
           bodyCreate += chunk;
           bodyCreate = JSON.parse(bodyCreate);
           bodyCreate.id = new Date();
@@ -46,72 +45,39 @@ http
             id: bodyCreate.id,
           });
 
-          Todo.save();
+          await Todo.save();
         });
 
         res.end("create");
+
         break;
 
       case "/delete":
         let bodyDelete = "";
-        req.on("data", (chunk) => {
+        req.on("data", async (chunk) => {
           bodyDelete += chunk;
           bodyDelete = JSON.parse(bodyDelete);
-
-          Item.update({ id: bodyDelete.id }, { deleted: true }).then(
-            (res) => res
+          const result = await Item.update(
+            { id: bodyDelete.id },
+            { deleted: true }
           );
+          await res.end(JSON.stringify(result));
         });
 
         res.end("delete");
         break;
-      case "/checked":
-        let bodyChecked = "";
-        req.on("data", (chunk) => {
-          bodyChecked += chunk;
-          bodyChecked = JSON.parse(bodyChecked);
 
-          Item.update({ id: bodyChecked.id }, { checked: true }).then(
-            (res) => res
-          );
-        });
-        // Item.update({ id: bodyChecked.id }, { checked: false })
-        // .then(res=>res)});
-
-        res.end("checked");
-        break;
-
-      case "/editing":
-        let bodyEditing = "";
-        req.on("data", (chunk) => {
-          bodyEditing += chunk;
-          bodyEditing = JSON.parse(bodyEditing);
-
-          Item.update({ id: bodyEditing.id }, { editing: true }).then(
-            (res) => res
-          );
-        });
-
-        res.end("editing");
-        break;
-
-      case "/change":
-        let bodyChange = "";
-        req.on("data", (chunk) => {
-          bodyChange += chunk;
-          bodyChange = JSON.parse(bodyChange);
-
-          Item.update({ id: bodyChange.id }, { editing: false }).then(
-            (res) => res
-          );
-          if (bodyChange.name !== undefined) {
-            Item.update({ id: bodyChange.id }, { name: bodyChange.name }).then(
-              (res) => res
-            );
-          }
+      case "/put":
+        let body = "";
+        req.on("data", async (chunk) => {
+          body += chunk;
+          body = JSON.parse(body);
+          const result = await Item.update({ id: body.id }, body);
+          await res.end(JSON.stringify(result));
         });
 
         res.end("Changed");
+
         break;
     }
   })
