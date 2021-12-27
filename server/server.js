@@ -21,19 +21,37 @@ const Task = new Schema({
 });
 const Model = mongoose.model;
 const Item = Model("todo-items", Task);
+function resEnd(method) {
+  let code;
+  let objResp;
+  if (method === "PUT") {
+    code = 201;
+    objResp = { editing: true };
+  } else if (method === "DELETE") {
+    code = 201;
+    objResp = { deleted: true };
+  } else if (method === "POST") {
+    code = 200;
+    objResp = { success: true };
+  }
+  return JSON.stringify({ status: code, result: objResp });
+}
 
 http
   .createServer(async (req, res) => {
     res.writeHead(200, defaultHeaders);
     switch (req.url) {
       case "/todos":
-        const result = await Item.find( { deleted: false });
-        await res.end( JSON.stringify(result));
+        const getTodos = async function getTodos() {
+          const result = await Item.find({ deleted: false });
+          await res.end(JSON.stringify(result));
+        };
+        await getTodos();
 
         break;
       case "/create":
         let bodyCreate = "";
-        req.on("data", async(chunk) => {
+        await req.on("data", (chunk) => {
           bodyCreate += chunk;
           bodyCreate = JSON.parse(bodyCreate);
           bodyCreate.id = new Date();
@@ -45,39 +63,33 @@ http
             id: bodyCreate.id,
           });
 
-          await Todo.save();
+          Todo.save();
         });
 
-        res.end("create");
+        res.end(resEnd(req.method));
 
         break;
 
       case "/delete":
         let bodyDelete = "";
-        req.on("data", async (chunk) => {
+        await req.on("data", async (chunk) => {
           bodyDelete += chunk;
           bodyDelete = JSON.parse(bodyDelete);
-          await Item.update(
-            { id: bodyDelete.id },
-            { deleted: true }
-          );
-            
-         
+          await Item.update({ id: bodyDelete.id }, { deleted: true });
         });
 
-        res.end("delete");
+        res.end(resEnd(req.method));
         break;
 
       case "/put":
         let body = "";
-        req.on("data", async (chunk) => {
+        await req.on("data", async (chunk) => {
           body += chunk;
           body = JSON.parse(body);
           await Item.update({ id: body.id }, body);
-          
         });
 
-        res.end("Changed");
+        res.end(resEnd(req.method));
 
         break;
     }
