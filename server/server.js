@@ -1,5 +1,11 @@
 const http = require("http");
 
+const todos = require("../tasks/routes/todos.js");
+const create = require("../tasks/routes/create.js");
+const put = require("../tasks/routes/put.js");
+const remove = require("../tasks/routes/delete.js");
+const newUser = require("../users/routes/new-user.js");
+const authorization = require('../users/routes/authorization.js');
 const defaultHeaders = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
@@ -11,87 +17,38 @@ const mongoose = require("mongoose");
 mongoose.connect(
   "mongodb+srv://VasiliyBuriy:forWorkVB2001@cluster0.6qwii.mongodb.net/todo-items?retryWrites=true&w=majority"
 );
-const Schema = mongoose.Schema;
-const Task = new Schema({
-  name: String,
-  checked: Boolean,
-  deleted: Boolean,
-  editing: Boolean,
-  id: Number,
-});
-const Model = mongoose.model;
-const Item = Model("todo-items", Task);
-function resEnd(method) {
-  let code;
-  let objResp;
-  if (method === "PUT") {
-    code = 201;
-    objResp = { editing: true };
-  } else if (method === "DELETE") {
-    code = 201;
-    objResp = { deleted: true };
-  } else if (method === "POST") {
-    code = 200;
-    objResp = { success: true };
-  }
-  return JSON.stringify({ status: code, result: objResp });
-}
 
 http
   .createServer(async (req, res) => {
     res.writeHead(200, defaultHeaders);
     switch (req.url) {
+
       case "/todos":
-        const getTodos = async function getTodos() {
-          const result = await Item.find({ deleted: false });
-          await res.end(JSON.stringify(result));
-        };
-        await getTodos();
-
+        todos.todos(req, res);
         break;
+
       case "/create":
-        let bodyCreate = "";
-        await req.on("data", (chunk) => {
-          bodyCreate += chunk;
-          bodyCreate = JSON.parse(bodyCreate);
-          bodyCreate.id = new Date();
-          const Todo = new Item({
-            name: bodyCreate.name,
-            checked: bodyCreate.checked,
-            deleted: bodyCreate.deleted,
-            editing: bodyCreate.editing,
-            id: bodyCreate.id,
-          });
-
-          Todo.save();
-        });
-
-        res.end(resEnd(req.method));
-
+        create.create(req, res);
         break;
 
       case "/delete":
-        let bodyDelete = "";
-        await req.on("data", async (chunk) => {
-          bodyDelete += chunk;
-          bodyDelete = JSON.parse(bodyDelete);
-          await Item.update({ id: bodyDelete.id }, { deleted: true });
-        });
-
-        res.end(resEnd(req.method));
+        remove.delete(req, res);
         break;
 
       case "/put":
-        let body = "";
-        await req.on("data", async (chunk) => {
-          body += chunk;
-          body = JSON.parse(body);
-          await Item.update({ id: body.id }, body);
-        });
-
-        res.end(resEnd(req.method));
-
+        put.put(req, res);
         break;
+
+      case "/new-user":
+        newUser.newUser(req, res);
+        break;
+
+      case "/authorization":
+        authorization.authorization(req, res);
+        break;
+      
     }
   })
   .listen(3000);
+
+//ошибки в файлах авторизации и тудус 

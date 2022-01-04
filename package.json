@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/JustVasiliy/todo-with-vanilla-js#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "nodemon": "^2.0.15"
   }
