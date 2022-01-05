@@ -1,11 +1,11 @@
 const http = require("http");
 
-const todos = require("../tasks/routes/todos.js");
-const create = require("../tasks/routes/create.js");
-const put = require("../tasks/routes/put.js");
-const remove = require("../tasks/routes/delete.js");
-const newUser = require("../users/routes/new-user.js");
-const authorization = require('../users/routes/authorization.js');
+const getTodos = require("../controllers /get.js");
+const create = require("../controllers /create.js");
+const put = require("../controllers /put.js");
+const remove = require("../controllers /delete.js");
+const newUser = require("../controllers /registration.js");
+const authorization = require('../controllers /authorization.js');
 const defaultHeaders = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
@@ -23,8 +23,8 @@ http
     res.writeHead(200, defaultHeaders);
     switch (req.url) {
 
-      case "/todos":
-        todos.todos(req, res);
+      case "/get":
+        getTodos.todos(req, res);
         break;
 
       case "/create":
@@ -39,7 +39,7 @@ http
         put.put(req, res);
         break;
 
-      case "/new-user":
+      case "/registration":
         newUser.newUser(req, res);
         break;
 

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const User = require("../../users/userShema.js");
-const Task = require("../tasksSchema.js");
+const User = require("../schemas/userShema.js");
+const Task = require("../schemas/tasksSchema.js");
 module.exports = {
   todos: async function (req, res) {
     const header = req.headers.authorization;
@@ -15,10 +15,10 @@ module.exports = {
         };
         await getTodos();
       } else {
-        res.end(JSON.stringify("You don't have a token"));
+        res.end(JSON.stringify( { success: false, message: "Invalid token", "status": 401 }));
       }
     } else {
-      res.end("wait");
+      res.end(JSON.stringify( { success: false, message: "Invalid token","status": 401 }));
     }
   },
 };

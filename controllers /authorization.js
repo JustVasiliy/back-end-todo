@@ -1,4 +1,4 @@
-const User = require('../../users/userShema.js');
+const User = require('../schemas/userShema.js');
 const jwt = require("jsonwebtoken");
 
 module.exports = {

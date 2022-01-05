@@ -1,10 +1,10 @@
-const User = require('../userShema.js');
-const resEnd = require('../../server/resEnd.js');
+const User = require('../schemas/userShema.js');
+const resEnd = require('../service /resEnd.js');
 const jwt = require("jsonwebtoken");
 module.exports = {
     newUser: function(req, res){
         let bodyNewUser = "";
-        let token = "u";
+        let token = "";
         req.on("data", async (chunk) => {
           bodyNewUser += chunk;
           bodyNewUser = JSON.parse(bodyNewUser);
