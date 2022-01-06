@@ -8,11 +8,11 @@ module.exports = {
         req.on("data", async (chunk) => {
           bodyNewUser += chunk;
           bodyNewUser = JSON.parse(bodyNewUser);
-          bodyNewUser.id = new Date();
-          const findUser = await User.User.find({nickname : bodyNewUser.nickname});
           
+          const findUser = await User.User.find({nickname : bodyNewUser.nickname});
+          console.log(findUser[0])
           if(findUser[0] === undefined){
-            const userInfo = {nickname: bodyNewUser.nickname, "exp": Date.now()/1000}
+            const userInfo = {nickname: bodyNewUser.nickname, id:bodyNewUser.id, "exp": Date.now()/1000}
             token = jwt.sign(userInfo, "myKey");
             let user = new User.User({ 
               name:  bodyNewUser.name,
@@ -22,7 +22,8 @@ module.exports = {
               id:  bodyNewUser.id,});
               user.save();
           }else{
-              token = "You need registration!";
+            
+              token = JSON.stringify({message:"This nickname already exists", code: 403});
           }
           }
           );

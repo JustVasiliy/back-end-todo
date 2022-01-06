@@ -6,11 +6,11 @@ module.exports = {
     const header = req.headers.authorization;
     const headerAuth = jwt.decode(header);
     if (headerAuth !== null) {
-      const userFind = await User.User.find({ nickname: headerAuth.nickname });
+      const userFind = await User.User.find({ id: headerAuth.id });
       //user will need authorization after 15 minutes
       if (userFind[0] !== undefined && (Date.now()/1000 - headerAuth.exp) <= 900) {
         const getTodos = async function getTodos() {
-          const result = await Task.Task.find({ deleted: false, nickname: headerAuth.nickname });
+          const result = await Task.Task.find({ deleted: false, nickname: headerAuth.id });
           res.end(JSON.stringify(result));
         };
         await getTodos();

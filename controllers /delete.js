@@ -9,7 +9,7 @@ module.exports = {
         const header = req.headers.authorization;
         const headerAuth = jwt.decode(header);
         if (headerAuth !== null) {
-          const userFind = await User.User.find({ nickname: headerAuth.nickname });
+          const userFind = await User.User.find({ id: headerAuth.id });
           //user will need authorization after 15 minutes
           if (
             userFind[0] !== undefined &&
@@ -20,7 +20,7 @@ module.exports = {
           bodyDelete = JSON.parse(bodyDelete);
           await Task.Task.update({ id: bodyDelete.id }, { deleted: true });
         });
-
+        
         res.end(resEnd.resEnd(req.method));
       } else {
         res.end(

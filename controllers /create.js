@@ -9,7 +9,7 @@ module.exports = {
         const headerAuth = jwt.decode(header);
         
         if (headerAuth !== null) {
-          const userFind = await User.User.find({ nickname: headerAuth.nickname });
+          const userFind = await User.User.find({ id: headerAuth.id });
           //user will need authorization after 15 minutes
           if (userFind[0] !== undefined && (Date.now()/1000 - headerAuth.exp) <= 900) {
             req.on("data", (chunk) => {
@@ -23,14 +23,14 @@ module.exports = {
               bodyCreate.id = new Date();
               
               const token = jwt.decode(bodyCreate.token);
-             
+              
               const Todo = new Task.Task({
                 name: bodyCreate.name,
                 checked: bodyCreate.checked,
                 deleted: bodyCreate.deleted,
                 editing: bodyCreate.editing,
                 id: bodyCreate.id,
-                nickname: token.nickname
+                nickname: token.id
               });
               
               Todo.save();

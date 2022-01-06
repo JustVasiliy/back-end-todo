@@ -10,10 +10,9 @@ module.exports = {
           bodyAuth = JSON.parse(bodyAuth);
 
           const findUser = await User.User.find(bodyAuth);
-          // const findUser = [1];
           
           if (findUser[0] !== undefined) {
-            const userInfo = {nickname: bodyAuth.nickname, exp: Date.now()/1000}
+            const userInfo = {nickname: bodyAuth.nickname,id: findUser[0].id, exp: Date.now()/1000};
             token = jwt.sign(userInfo, "myKey");
         
           }else{
