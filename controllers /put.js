@@ -23,20 +23,24 @@ module.exports = {
 
         res.end(resEnd.resEnd(req.method));
       } else {
+        res.statusCode = 401;
+        res.statusMessage = 'Invalid token'
         res.end(
           JSON.stringify({
             success: false,
             message: "Invalid token",
-            status: 401,
+            
           })
         );
       }
     } else {
+      res.statusCode = 401;
+      res.statusMessage = 'Invalid token'
       res.end(
         JSON.stringify({
           success: false,
-          message: "Invalid token",
-          status: 401,
+          message: "Invalid token"
+        
         })
       );
     }

@@ -4,6 +4,7 @@ const Task = require('../schemas/tasksSchema.js');
 const resEnd = require('../service /resEnd.js');
 module.exports = {
     create: async function(req, res){
+      
         let bodyCreate = "";
         const header = req.headers.authorization;
         const headerAuth = jwt.decode(header);
@@ -34,13 +35,18 @@ module.exports = {
               });
               
               Todo.save();
+              
               res.end(resEnd.resEnd(req.method));
             });
           }else {
-            res.end(JSON.stringify( { success: false, message: "Invalid token","status": 401 }));
+            res.statusCode = 401;
+            res.statusMessage = 'Invalid token'
+            res.end(JSON.stringify( { success: false, message: "Invalid token" }));
           }
         }else {
-          res.end(JSON.stringify( { success: false, message: "Invalid token","status": 401 }));
+          res.statusCode = 401;
+          res.statusMessage = 'Invalid token'
+          res.end(JSON.stringify( { success: false, message: "Invalid token"}));
         }
         
     

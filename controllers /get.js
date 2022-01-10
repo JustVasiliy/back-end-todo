@@ -15,10 +15,14 @@ module.exports = {
         };
         await getTodos();
       } else {
-        res.end(JSON.stringify( { success: false, message: "Invalid token", "status": 401 }));
+        res.statusCode = 401;
+        res.statusMessage = 'Invalid token'
+        res.end(JSON.stringify( { success: false, message: "Invalid token" }));
       }
     } else {
-      res.end(JSON.stringify( { success: false, message: "Invalid token","status": 401 }));
+      res.statusCode = 401;
+      res.statusMessage = 'Invalid token'
+      res.end(JSON.stringify( { success: false, message: "Invalid token" }));
     }
   },
 };

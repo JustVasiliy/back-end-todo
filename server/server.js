@@ -11,7 +11,8 @@ const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, GET,DELETE, PUT",
   "Access-Control-Allow-Headers":
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+
 };
 const mongoose = require("mongoose");
 mongoose.connect(
@@ -20,7 +21,7 @@ mongoose.connect(
 
 http
   .createServer(async (req, res) => {
-    res.writeHead(200, defaultHeaders);
+    res.writeHead(200, 'ok', defaultHeaders);
     switch (req.url) {
 
       case "/get":
