@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../schemas/userShema.js');
 const Task = require('../schemas/tasksSchema.js');
 const resEnd = require('../service /resEnd.js');
-
+const invalid = require('../service /invalidError.js');
 module.exports = {
     delete: async function(req, res){
         let bodyDelete = "";
@@ -18,31 +18,17 @@ module.exports = {
         req.on("data", async (chunk) => {
           bodyDelete += chunk;
           bodyDelete = JSON.parse(bodyDelete);
-          await Task.Task.update({ id: bodyDelete.id }, { deleted: true });
+          await Task.Task.update({ id: bodyDelete.id,nickname:userFind[0].id }, { deleted: true });
         });
         
         res.end(resEnd.resEnd(req.method));
       } else {
-        res.statusCode = 401;
-        res.statusMessage = 'Invalid token'
-        res.end(
-          JSON.stringify({
-            success: false,
-            message: "Invalid token",
-            
-          })
-        );
+        invalid.invalidError(res, 401);
+        
       }
     } else {
-      res.statusCode = 401;
-      res.statusMessage = 'Invalid token'
-      res.end(
-        JSON.stringify({
-          success: false,
-          message: "Invalid token",
-          
-        })
-      );
+      invalid.invalidError(res, 401);
+      
     }
     }
 }

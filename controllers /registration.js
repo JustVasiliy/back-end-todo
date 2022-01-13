@@ -10,7 +10,6 @@ module.exports = {
           bodyNewUser = JSON.parse(bodyNewUser);
           
           const findUser = await User.User.find({nickname : bodyNewUser.nickname});
-          console.log(findUser[0])
           if(findUser[0] === undefined){
             const userInfo = {nickname: bodyNewUser.nickname, id:bodyNewUser.id, "exp": Date.now()/1000}
             token = jwt.sign(userInfo, "myKey");
@@ -23,7 +22,7 @@ module.exports = {
               user.save();
           }else{
             
-              token = JSON.stringify({message:"This nickname already exists", code: 403});
+              token = "This nickname already exists";
           }
           }
           );
