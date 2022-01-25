@@ -24,20 +24,14 @@ module.exports = {
         };
         await getTodos();
       } else {
-        ctx.response.status = 401;
-        ctx.body = JSON.stringify({
-          success: false,
-          message: "Invalid token",
-        });
+        invalid.invalidError(ctx)
+        
 
         ctx.body = JSON.stringify(result);
       }
     } else {
-      ctx.response.status = 401;
-      ctx.body = JSON.stringify({
-        success: false,
-        message: "Invalid token",
-      });
+      invalid.invalidError(ctx)
+     
     }
   },
 };

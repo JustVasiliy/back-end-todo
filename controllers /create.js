@@ -33,18 +33,10 @@ module.exports = {
         ctx.response.status = 200;
         ctx.body = JSON.stringify({ status: 200, result: { success: true } });
       } else {
-        ctx.response.status = 401;
-        ctx.body = JSON.stringify({
-          success: false,
-          message: "Invalid token",
-        });
+        invalid.invalidError(ctx)
       }
     } else {
-      ctx.response.status = 401;
-      ctx.body = JSON.stringify({
-        success: false,
-        message: "Invalid token",
-      });
+      invalid.invalidError(ctx)
     }
   },
 };
