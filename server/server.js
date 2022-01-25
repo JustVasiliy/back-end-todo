@@ -18,38 +18,57 @@ const mongoose = require("mongoose");
 mongoose.connect(
   "mongodb+srv://VasiliyBuriy:forWorkVB2001@cluster0.6qwii.mongodb.net/todo-items?retryWrites=true&w=majority"
 );
+const Koa = require('koa');
+const KoaRouter = require('koa-router');
+const bodyParser = require('koa-bodyparser');
+const cors = require('@koa/cors');
 
-http
-  .createServer(async (req, res) => {
-    res.writeHead(200, 'ok', defaultHeaders);
-    switch (req.url) {
+const app = new Koa();
+const router = new KoaRouter();
+app.use(cors(defaultHeaders));
+app.use(bodyParser()); 
+app.use(router.routes()).use(router.allowedMethods());
 
-      case "/get":
-        getTodos.todos(req, res);
-        break;
 
-      case "/create":
-        create.create(req, res);
-        break;
+router.get('/get', async(ctx)=>{await getTodos.todos(ctx)});
+router.post('/create', async(ctx)=>{await create.create(ctx)});
+router.put('/put', async (ctx)=>{await put.put(ctx)});
+router.delete('/delete', async (ctx)=>{await remove.delete(ctx)});
+router.post('/authorization', async(ctx)=>{await authorization.authorization(ctx)});
+router.post('/registration', async(ctx)=>{await newUser.newUser(ctx)});
+// http
+//   .createServer(async (req, res) => {
+//     res.writeHead(200, 'ok', defaultHeaders);
+//     switch (req.url) {
 
-      case "/delete":
-        remove.delete(req, res);
-        break;
+//       case "/get":
+//         getTodos.todos(req, res);
+//         break;
 
-      case "/put":
-        put.put(req, res);
-        break;
+//       case "/create":
+//         create.create(req, res);
+//         break;
 
-      case "/registration":
-        newUser.newUser(req, res);
-        break;
+//       case "/delete":
+//         remove.delete(req, res);
+//         break;
 
-      case "/authorization":
-        authorization.authorization(req, res);
-        break;
+//       case "/put":
+//         put.put(req, res);
+//         break;
+
+//       case "/registration":
+//         newUser.newUser(req, res);
+//         break;
+
+//       case "/authorization":
+//         authorization.authorization(req, res);
+//         break;
       
-    }
-  })
-  .listen(3000);
+//     }
+//   })
+//   .listen(3000);
 
-//ошибки в файлах авторизации и тудус 
+app.listen(3000, function(){
+  console.log('Server running on https://localhost:3000')
+});

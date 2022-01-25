@@ -5,7 +5,7 @@ const Person = new SchemaUser({
   surname: String,
   nickname: String,
   password: String,
-  id: Number,
+  id: String,
   
 });
 const Model = mongoose.model;
