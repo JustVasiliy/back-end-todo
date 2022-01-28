@@ -1,11 +1,4 @@
-const http = require("http");
-
-const getTodos = require("../controllers /get.js");
-const create = require("../controllers /create.js");
-const put = require("../controllers /put.js");
-const remove = require("../controllers /delete.js");
-const newUser = require("../controllers /registration.js");
-const authorization = require("../controllers /authorization.js");
+require("dotenv").config();
 const defaultHeaders = {
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
@@ -14,38 +7,25 @@ const defaultHeaders = {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
 };
 const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://VasiliyBuriy:forWorkVB2001@cluster0.6qwii.mongodb.net/todo-items?retryWrites=true&w=majority"
-);
+mongoose.connect(process.env.URL_MONGO);
 const Koa = require("koa");
-const KoaRouter = require("koa-router");
 const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
 
 const app = new Koa();
-const router = new KoaRouter();
+const routerTasks = require("../controllers /tasks/index.js");
+const routerAuth = require("../controllers /authorization_and_registration/auth/index.js");
+const routerRegistr = require("../controllers /authorization_and_registration/registr/index.js");
+
+const errorHendler = require("../service /catchError");
+
 app.use(cors(defaultHeaders));
 app.use(bodyParser());
-app.use(router.routes()).use(router.allowedMethods());
 
-router.get("/get", async (ctx) => {
-  await getTodos.todos(ctx);
-});
-router.post("/create", async (ctx) => {
-  await create.create(ctx);
-});
-router.put("/put", async (ctx) => {
-  await put.put(ctx);
-});
-router.delete("/delete", async (ctx) => {
-  await remove.delete(ctx);
-});
-router.post("/authorization", async (ctx) => {
-  await authorization.authorization(ctx);
-});
-router.post("/registration", async (ctx) => {
-  await newUser.newUser(ctx);
-});
+app.use(routerTasks.routes()).use(routerTasks.allowedMethods());
+app.use(routerAuth.routes()).use(routerAuth.allowedMethods());
+app.use(routerRegistr.routes()).use(routerRegistr.allowedMethods());
+app.use(errorHendler);
 
 app.listen(3000, function () {
   console.log("Server running on https://localhost:3000");

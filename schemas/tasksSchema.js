@@ -6,7 +6,7 @@ const Task = new Schema({
   deleted: Boolean,
   editing: Boolean,
   id: Number,
-  nickname: String
+  createdBy: String
 });
 const Model = mongoose.model;
 

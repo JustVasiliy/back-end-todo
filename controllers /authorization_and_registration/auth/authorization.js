@@ -1,18 +1,22 @@
-const User = require("../schemas/userShema.js");
+const User = require("../../../schemas/userShema.js");
 const jwt = require("jsonwebtoken");
-
+const jwtExpDate = require("../../../service /jwtExpDate");
 module.exports = {
   authorization: async function (ctx) {
     const bodyRequest = ctx.request.body;
     const findUser = await User.User.find(bodyRequest);
     let token;
-    if (findUser[0] !== undefined) {
+    if (
+      findUser[0] !== undefined &&
+      bodyRequest.nickname.trim() !== "" &&
+      bodyRequest.nickname.trim() !== ""
+    ) {
       const userInfo = {
         nickname: bodyRequest.nickname,
         id: findUser[0].id,
-        exp: Date.now() / 1000,
       };
-      token = jwt.sign(userInfo, "myKey");
+      token = jwt.sign(userInfo, "myKey", { expiresIn: jwtExpDate(15) });
+      console.log(jwt.decode(token));
     } else {
       token = "You need registration!";
     }

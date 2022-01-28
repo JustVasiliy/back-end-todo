@@ -1,5 +1,5 @@
-const User = require("../schemas/userShema.js");
-const resEnd = require("../service /resEnd.js");
+const User = require("../../../schemas/userShema.js");
+
 const jwt = require("jsonwebtoken");
 module.exports = {
   newUser: async function (ctx) {
@@ -8,7 +8,13 @@ module.exports = {
     bodyNewUser = ctx.request.body;
 
     const findUser = await User.User.find({ nickname: bodyNewUser.nickname });
-    if (findUser[0] === undefined) {
+    if (
+      findUser[0] === undefined &&
+      bodyNewUser.name.trim() !== "" &&
+      bodyNewUser.surname.trim() !== "" &&
+      bodyNewUser.nickname.trim() !== "" &&
+      bodyNewUser.password.trim() !== ""
+    ) {
       const userInfo = {
         nickname: bodyNewUser.nickname,
         id: bodyNewUser.id,
