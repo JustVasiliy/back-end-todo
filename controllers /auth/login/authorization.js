@@ -5,7 +5,7 @@ module.exports = {
   authorization: async function (ctx) {
     const bodyRequest = ctx.request.body;
     const findUser = await User.User.find(bodyRequest);
-    
+
     let token;
     if (
       findUser[0] !== undefined &&
@@ -17,7 +17,6 @@ module.exports = {
         id: findUser[0].id,
       };
       token = jwt.sign(userInfo, "myKey", { expiresIn: jwtExpDate(15) });
-      
     } else {
       token = "You need registration!";
     }

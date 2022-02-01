@@ -6,13 +6,8 @@ const Person = new SchemaUser({
   nickname: String,
   password: String,
   id: String,
-  
 });
 const Model = mongoose.model;
 module.exports = {
-    User: Model("users", Person),
-}
-
-
-
-
+  User: Model("users", Person),
+};

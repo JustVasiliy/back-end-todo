@@ -6,11 +6,10 @@ const Task = new Schema({
   deleted: Boolean,
   editing: Boolean,
   id: Number,
-  createdBy: String
+  createdBy: String,
 });
 const Model = mongoose.model;
 
 module.exports = {
-    Task: Model("todo-items", Task),
-}
-
+  Task: Model("todo-items", Task),
+};

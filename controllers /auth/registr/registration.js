@@ -5,7 +5,7 @@ module.exports = {
   newUser: async function (ctx) {
     let token = "";
 
-    bodyNewUser = ctx.request.body;
+    let bodyNewUser = ctx.request.body;
 
     const findUser = await User.User.find({ nickname: bodyNewUser.nickname });
     if (

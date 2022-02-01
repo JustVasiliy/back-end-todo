@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const User = require("../schemas/userShema");
-const invalidError = require("./invalidError");
+const { User } = require("../schemas/userShema");
+const { invalidError } = require("./invalidError");
 module.exports = async function jwtVerifucation(ctx, next) {
   const token = ctx.request.headers.authorization;
   const decodeToken = jwt.decode(token);
@@ -11,15 +11,15 @@ module.exports = async function jwtVerifucation(ctx, next) {
   });
 
   if (decodeToken !== null) {
-    const userFind = await User.User.find({ id: decodeToken.id });
+    const userFind = await User.find({ id: decodeToken.id });
 
     if (userFind[0] !== undefined && jwtVerify !== "TokenExpiredError") {
       return next();
     } else {
       console.log("here");
-      invalidError.invalidError(ctx);
+      invalidError(ctx);
     }
   } else {
-    invalidError.invalidError(ctx);
+    invalidError(ctx);
   }
 };

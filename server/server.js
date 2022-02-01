@@ -13,18 +13,14 @@ const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
 
 const app = new Koa();
-const routerTasks = require("../controllers /tasks/index.js");
-const routerAuth = require("../controllers /authorization_and_registration/auth/index.js");
-const routerRegistr = require("../controllers /authorization_and_registration/registr/index.js");
+const routers = require("../controllers /index.js");
 
 const errorHendler = require("../service /catchError");
 
 app.use(cors(defaultHeaders));
 app.use(bodyParser());
 
-app.use(routerTasks.routes()).use(routerTasks.allowedMethods());
-app.use(routerAuth.routes()).use(routerAuth.allowedMethods());
-app.use(routerRegistr.routes()).use(routerRegistr.allowedMethods());
+app.use(routers.routes()).use(routers.allowedMethods());
 app.use(errorHendler);
 
 app.listen(3000, function () {
