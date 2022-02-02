@@ -1,10 +1,10 @@
-const User = require("../../../schemas/userShema.js");
+const { User } = require("../../../schemas/userShema.js");
 const jwt = require("jsonwebtoken");
 const jwtExpDate = require("../../../service /jwtExpDate");
 module.exports = {
   authorization: async function (ctx) {
     const bodyRequest = ctx.request.body;
-    const findUser = await User.User.find(bodyRequest);
+    const findUser = await User.find(bodyRequest);
 
     let token;
     if (

@@ -1,17 +1,8 @@
 {
-    "semi": false,
-    "overrides": [
-      {
-        "files": "*.js",
-        "options": {
-          "semi": true
-        }
-      },
-      {
-        "files": ["*.html", "legacy/**/*.js"],
-        "options": {
-          "tabWidth": 4
-        }
-      }
-    ]
-  }
+  "printWidth": 80,
+  "tabWidth": 2,
+  "arrowParens": "always",
+  "trailingComma": "es5",
+  "bracketSameLine": false,
+  "endOfLine": "auto"
+}
