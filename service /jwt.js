@@ -16,7 +16,7 @@ module.exports = async function jwtVerifucation(ctx, next) {
     if (userFind[0] !== undefined && jwtVerify !== "TokenExpiredError") {
       return next();
     } else {
-      console.log("here");
+      
       invalidError(ctx);
     }
   } else {

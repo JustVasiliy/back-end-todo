@@ -7,7 +7,9 @@ const defaultHeaders = {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
 };
 const mongoose = require("mongoose");
+
 mongoose.connect(process.env.URL_MONGO);
+
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
@@ -26,3 +28,6 @@ app.use(errorHendler);
 app.listen(3000, function () {
   console.log("Server running on https://localhost:3000");
 });
+
+
+// module.exports = app;

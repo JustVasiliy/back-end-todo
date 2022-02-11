@@ -16,7 +16,7 @@ module.exports = {
         nickname: bodyRequest.nickname,
         id: findUser[0].id,
       };
-      token = jwt.sign(userInfo, "myKey", { expiresIn: jwtExpDate(15) });
+      token = jwt.sign(userInfo, "myKey", { expiresIn: jwtExpDate(60) });
     } else {
       token = "You need registration!";
     }
