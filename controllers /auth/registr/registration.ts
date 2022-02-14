@@ -1,13 +1,17 @@
-const User = require("../../../schemas/userShema.js");
+const User = require("../../../schemas/userShema");
+import * as Koa from "koa";
+import * as jwt from "jsonwebtoken";
+import { userInfo, bodyNewUser } from "../../../service /types";
 
-const jwt = require("jsonwebtoken");
 module.exports = {
-  newUser: async function (ctx) {
-    let token = "";
+  newUser: async function (ctx: Koa.Context) {
+    let token: string = "";
 
-    let bodyNewUser = ctx.request.body;
+    let bodyNewUser: bodyNewUser = ctx.request.body;
 
-    const findUser = await User.User.find({ nickname: bodyNewUser.nickname });
+    const findUser: bodyNewUser[] = await User.User.find({
+      nickname: bodyNewUser.nickname,
+    });
     if (
       findUser[0] === undefined &&
       bodyNewUser.name.trim() !== "" &&
@@ -15,10 +19,9 @@ module.exports = {
       bodyNewUser.nickname.trim() !== "" &&
       bodyNewUser.password.trim() !== ""
     ) {
-      const userInfo = {
+      const userInfo: userInfo = {
         nickname: bodyNewUser.nickname,
         id: bodyNewUser.id,
-        exp: Date.now() / 1000,
       };
       token = jwt.sign(userInfo, "myKey");
       let user = new User.User({

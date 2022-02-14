@@ -1,6 +1,8 @@
 const { Task } = require("../schemas/tasksSchema");
-const getTodos = async function getTodos(headerAuth, ctx) {
-  const result = await Task.find({
+import * as Koa from "koa";
+import { bodyCreate } from "./types";
+const getTodos = async function getTodos(headerAuth: any, ctx: Koa.Context) {
+  const result: bodyCreate[] = await Task.find({
     deleted: false,
     createdBy: headerAuth.id,
   });
