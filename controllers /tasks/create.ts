@@ -2,14 +2,14 @@ import * as jwt from "jsonwebtoken";
 const { Task } = require("../../schemas/tasksSchema");
 const { resEnd } = require("../../service /resEnd");
 import * as Koa from "koa";
-import {bodyCreate} from "../../service /types"
+import { bodyCreate } from "../../service /types";
 module.exports = {
-  create: async function (ctx:Koa.Context) {
-    const bodyCreate:bodyCreate = ctx.request.body;
+  create: async function (ctx: Koa.Context) {
+    const bodyCreate: bodyCreate = ctx.request.body;
 
     bodyCreate.id = `${new Date()}`;
 
-    const token: any= jwt.decode(bodyCreate.token);
+    const token: any = jwt.decode(bodyCreate.token);
     const Todo = new Task({
       name: bodyCreate.name,
       checked: bodyCreate.checked,

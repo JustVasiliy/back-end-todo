@@ -12,7 +12,7 @@
     "ts": "ts-node-dev --respawn server/server.ts",
     "lint": "eslint --fix --ext .js ./",
     "pret": "prettier --write ./",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles "
   },
   "repository": {
     "type": "git",

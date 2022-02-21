@@ -1,5 +1,4 @@
 describe("tests", () => {
-  
   const { app } = require("../server/server");
   test("Post", async () => {
     const response = await request(app)
@@ -15,8 +14,6 @@ describe("tests", () => {
 
       .expect(response.status)
       .toBe(200);
-
-      
   });
   test("Put", async () => {
     const response = await request(app).post("/api/task/create").send({
@@ -51,8 +48,7 @@ describe("tests", () => {
 
   afterAll(() => {
     mongoose.connection.close();
-    mongoose.disconnect()
+    mongoose.disconnect();
     console.log("server closed!");
   });
 });
-

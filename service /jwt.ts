@@ -7,7 +7,9 @@ module.exports = async function jwtVerifucation(
   next: Koa.Next
 ) {
   const token: string | undefined = ctx.request.headers.authorization;
+
   const decodeToken: any = jwt.decode(`${token}`);
+
   const jwtVerify: any = jwt.verify(`${token}`, "myKey", function (err) {
     if (err !== null) {
       return "TokenExpiredError";

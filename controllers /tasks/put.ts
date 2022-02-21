@@ -14,7 +14,6 @@ module.exports = {
     const userFind: any = await User.find({ id: headerAuth.id });
 
     await Task.update({ id: body.id, nickname: userFind[0].id }, body);
-
     ctx.response.status = 200;
     ctx.body = resEnd(ctx.request.method);
   },

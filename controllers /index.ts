@@ -1,4 +1,4 @@
-const KoaRouter = require ("koa-router");
+const KoaRouter = require("koa-router");
 const router = new KoaRouter({ prefix: "/api" });
 
 const routerTasks = require("./tasks/index");
