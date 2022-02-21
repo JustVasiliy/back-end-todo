@@ -65,6 +65,7 @@ describe("Todos endpoint", () => {
   });
 
   afterAll(() => {
+	
     server.close();
   });
 });
