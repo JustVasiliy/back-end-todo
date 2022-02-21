@@ -27,14 +27,15 @@ describe("Todos endpoint", () => {
   it("POST", async () => {
     const response = await request(baseUrl)
       .post("/api/task/create")
-      .set("Authorization", token)
-      .send({
+	  .send({
         name: "test",
         checked: false,
         deleted: false,
         id: "tests",
-        createdBy: "e93f9316-6430-4d0e-99b5-cb71eaedd281",
-      });
+        // createdBy: "e93f9316-6430-4d0e-99b5-cb71eaedd281",
+      })
+      .set("Authorization", token)
+      
 
     expect(response.statusCode).toBe(200);
   });
@@ -47,7 +48,7 @@ describe("Todos endpoint", () => {
         checked: false,
         deleted: false,
         id: 1643618690402,
-        createdBy: "e93f9316-6430-4d0e-99b5-cb71eaedd281",
+        // createdBy: "e93f9316-6430-4d0e-99b5-cb71eaedd281",
       });
 
     expect(response.statusCode).toBe(200);
@@ -61,7 +62,7 @@ describe("Todos endpoint", () => {
         checked: false,
         deleted: true,
         id: 1643618690402,
-        createdBy: "e93f9316-6430-4d0e-99b5-cb71eaedd281",
+        // createdBy: "e93f9316-6430-4d0e-99b5-cb71eaedd281",
       });
 
     expect(response.statusCode).toBe(200);

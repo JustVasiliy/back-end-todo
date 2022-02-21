@@ -17,7 +17,7 @@ app.use(bodyParser());
 
 app.use(routers.routes()).use(routers.allowedMethods());
 app.use(errorHendler);
-console.log(1);
+
 const server = app.listen(3000, function () {
   console.log("Server running on http://localhost:3000");
 });

@@ -9,7 +9,8 @@ module.exports = {
 
     bodyCreate.id = `${new Date()}`;
 
-    const token: any = jwt.decode(bodyCreate.token);
+    const token: any = jwt.decode(ctx.request.headers.authorization);
+    console.log(token)
     const Todo = new Task({
       name: bodyCreate.name,
       checked: bodyCreate.checked,

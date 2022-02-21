@@ -8,7 +8,7 @@ describe("tests", () => {
         checked: true,
         deleted: false,
         editing: false,
-        id: "123",
+        // id: "123",
         createdBy: "123",
       })
 
@@ -21,7 +21,7 @@ describe("tests", () => {
       checked: true,
       deleted: false,
       editing: false,
-      id: "123",
+      // id: "123",
       createdBy: "123",
     });
 
@@ -33,7 +33,7 @@ describe("tests", () => {
       checked: true,
       deleted: false,
       editing: false,
-      id: "123",
+      // id: "123",
       createdBy: "123",
     });
 
