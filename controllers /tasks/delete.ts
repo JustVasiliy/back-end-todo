@@ -10,7 +10,7 @@ module.exports = {
     const headerAuth: any = jwt.decode(`${header}`);
     const userFind = await User.find({ id: headerAuth.id });
     let bodyDelete = ctx.request.body;
-    console.log("delete")
+    console.log("delete");
     await Task.update(
       { id: bodyDelete.id, nickname: userFind[0].id },
       { deleted: true }
