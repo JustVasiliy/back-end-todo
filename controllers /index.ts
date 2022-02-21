@@ -1,5 +1,5 @@
-import * as KoaRouter from "koa-router";
-const router: KoaRouter = new KoaRouter({ prefix: "/api" });
+const KoaRouter = require ("koa-router");
+const router = new KoaRouter({ prefix: "/api" });
 
 const routerTasks = require("./tasks/index");
 const routerAuth = require("./auth/login/index");

@@ -3,8 +3,8 @@ const { create } = require("./create");
 const { put } = require("./put");
 const { remove } = require("./delete");
 import * as Koa from "koa";
-import * as KoaRouter from "koa-router";
-const router: KoaRouter = new KoaRouter({ prefix: "/task" });
+const KoaRouter = require ("koa-router");
+const router = new KoaRouter({ prefix: "/task" });
 
 const jwtVerification = require("../../service /jwt");
 

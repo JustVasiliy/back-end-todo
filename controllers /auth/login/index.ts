@@ -1,7 +1,7 @@
 const { authorization } = require("./authorization");
-import * as KoaRouter from "koa-router";
+const KoaRouter = require("koa-router");
 import * as Koa from "koa";
-const router: KoaRouter = new KoaRouter();
+const router = new KoaRouter();
 
 router.post("/authorization", async (ctx: Koa.Context) => {
   await authorization(ctx);

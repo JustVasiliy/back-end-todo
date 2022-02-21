@@ -1,12 +1,13 @@
 require("dotenv").config();
 
-import * as Koa from "koa";
-import * as bodyParser from "koa-bodyparser";
-import * as cors from "@koa/cors";
+const Koa = require("koa");
+const bodyParser = require("koa-bodyparser");
+const  cors = require("@koa/cors");
 import * as mongoose from "mongoose";
-mongoose.connect(`${process.env.URL_MONGO}`);
-
-const app: Koa = new Koa();
+// import {connect} from "mongoose"
+// connect(`${process.env.URL_MONGO}`);
+// mongoose.disconnect()
+const app = new Koa();
 const routers = require("../controllers /index");
 
 const errorHendler = require("../service /catchError");
@@ -17,6 +18,9 @@ app.use(bodyParser());
 app.use(routers.routes()).use(routers.allowedMethods());
 app.use(errorHendler);
 
-app.listen(3000, function () {
+const server = app.listen(3000, function () {
   console.log("Server running on https://localhost:3000");
+  
 });
+server.close()
+module.exports = app
